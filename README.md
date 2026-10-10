@@ -10,6 +10,8 @@
   - **Xiaomi MiMo**：预填 `https://api.xiaomimimo.com/v1`，默认模型 `mimo-v2.6-flash`
 - 两者底层走 OpenAI 兼容协议，保存时自动映射为 `openai-compatible` 类型，服务器稳定识别。
 
+![MiMo 服务商中文配置与实测](providers.jpg)
+
 ## 文件说明
 
 | 文件 | 说明 |
