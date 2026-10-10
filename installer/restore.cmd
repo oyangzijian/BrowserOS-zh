@@ -3,6 +3,15 @@ chcp 65001 >nul
 REM BrowserOS 中文版一键恢复脚本 (Windows)
 REM 双击运行。从备份恢复英文原版。
 
+REM 预检：BrowserOS 必须先完全退出
+tasklist /fi "imagename eq BrowserOS.exe" 2>nul | find /i "BrowserOS.exe" >nul
+if not errorlevel 1 (
+  echo [!] 检测到 BrowserOS 正在运行。
+  echo 请先完全退出 BrowserOS，然后重新双击本脚本。
+  pause
+  exit /b 1
+)
+
 set "EXT_BASE=%LOCALAPPDATA%\BrowserOS\User Data\Default\Extensions\bflpfmnmnokmjhmgnolecpppdbdophmk"
 
 if not exist "%EXT_BASE%" (
@@ -31,7 +40,7 @@ for %%f in ("%CHUNKS%\app-*.js") do (
 
 :found_app
 set RESTORED=0
-if exist "%APP_DST%.bak" (
+if defined APP_DST if exist "%APP_DST%.bak" (
   copy /y "%APP_DST%.bak" "%APP_DST%" >nul
   echo [OK] 已恢复主界面文件
   set RESTORED=1
@@ -49,6 +58,6 @@ if exist "%VER_DIR%\background.js.bak" (
 
 if "%RESTORED%"=="1" (
   echo.
-  echo 请完全退出 BrowserOS 再重新打开。
+  echo 请重新打开 BrowserOS，扩展已恢复为英文原版。
 )
 pause

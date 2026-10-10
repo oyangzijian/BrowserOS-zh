@@ -1,7 +1,30 @@
 @echo off
 chcp 65001 >nul
 REM BrowserOS 中文版一键安装脚本 (Windows)
-REM 双击运行。会备份原文件，然后替换为中文版。
+REM 用法：在解压后的完整文件夹里，双击 installer\install.cmd 运行。
+
+REM 预检1：脚本必须和两个 js 文件在同一解压包里（防止单独移动脚本导致静默失败）
+if not exist "%~dp0..\app-DRpXG1p6.js" (
+  echo [X] 找不到 app-DRpXG1p6.js。
+  echo 请不要单独移动本脚本：在解压后的完整文件夹里双击 installer\install.cmd 运行。
+  pause
+  exit /b 1
+)
+if not exist "%~dp0..\background.js" (
+  echo [X] 找不到 background.js。
+  echo 请不要单独移动本脚本：在解压后的完整文件夹里双击 installer\install.cmd 运行。
+  pause
+  exit /b 1
+)
+
+REM 预检2：BrowserOS 必须先完全退出，否则替换可能不生效
+tasklist /fi "imagename eq BrowserOS.exe" 2>nul | find /i "BrowserOS.exe" >nul
+if not errorlevel 1 (
+  echo [!] 检测到 BrowserOS 正在运行。
+  echo 请先完全退出 BrowserOS，然后重新双击本脚本。
+  pause
+  exit /b 1
+)
 
 set "EXT_BASE=%LOCALAPPDATA%\BrowserOS\User Data\Default\Extensions\bflpfmnmnokmjhmgnolecpppdbdophmk"
 
@@ -45,8 +68,18 @@ if not exist "%VER_DIR%\background.js.bak" copy "%VER_DIR%\background.js" "%VER_
 
 echo [*] 安装中文版...
 copy /y "%~dp0..\app-DRpXG1p6.js" "%APP_DST%" >nul
+if errorlevel 1 (
+  echo [X] 复制失败，请确认 BrowserOS 已完全退出后重试。
+  pause
+  exit /b 1
+)
 copy /y "%~dp0..\background.js" "%VER_DIR%\background.js" >nul
+if errorlevel 1 (
+  echo [X] 复制失败，请确认 BrowserOS 已完全退出后重试。
+  pause
+  exit /b 1
+)
 
 echo.
-echo [OK] 安装完成！请完全退出 BrowserOS 再重新打开。
+echo [OK] 安装完成！重新打开 BrowserOS，打开扩展设置页检查是否为中文。
 pause
