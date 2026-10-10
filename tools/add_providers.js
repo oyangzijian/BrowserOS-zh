@@ -36,7 +36,7 @@ rep(
 // 4. Card list: inline custom templates (no const declaration)
 rep(
   'c=fE.filter(',
-  'c=[...fE,{id:"deepseek",name:"DeepSeek",defaultBaseUrl:"https://api.deepseek.com",defaultModelId:"deepseek-chat",supportsImages:false,contextWindow:64000,iconType:"openai-compatible"},{id:"mimo",name:"Xiaomi MiMo",defaultBaseUrl:"https://api.xiaomimimo.com/v1",defaultModelId:"mimo-v2.5-pro",supportsImages:true,contextWindow:1000000,iconType:"openai-compatible"}].filter('
+  'c=[...fE,{id:"deepseek",name:"DeepSeek",defaultBaseUrl:"https://api.deepseek.com",defaultModelId:"deepseek-chat",supportsImages:false,contextWindow:64000,iconType:"openai-compatible"},{id:"mimo",name:"Xiaomi MiMo",defaultBaseUrl:"https://api.xiaomimimo.com/v1",defaultModelId:"mimo-v2.6-flash",supportsImages:true,contextWindow:1000000,iconType:"openai-compatible"}].filter('
 );
 
 // 5. Card icon: allow per-template iconType override
