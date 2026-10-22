@@ -4,7 +4,9 @@ REM BrowserOS 侧边栏粘贴修复一键安装 (Windows)
 REM 用法：在完整包的 sidepanel 文件夹里，双击 install-sidepanel.cmd 运行。
 REM 需要已安装 Node.js（没有请先到 https://nodejs.org 装 LTS 版）。
 
-if not exist "%~dp0fix_sidepanel_paste.js" (
+set "FIX=%~dp0fix_sidepanel_paste.js"
+if not exist "%FIX%" if exist "%~dp0..\..\tools\fix_sidepanel_paste.js" set "FIX=%~dp0..\..\tools\fix_sidepanel_paste.js"
+if not exist "%FIX%" (
   echo [X] 找不到 fix_sidepanel_paste.js。
   echo 请不要单独移动本脚本：在完整包的 sidepanel 文件夹里双击运行。
   pause
@@ -61,7 +63,7 @@ exit /b 1
 :found_target
 echo [*] 目标文件：%TARGET%
 if not exist "%TARGET%.bak-paste" copy "%TARGET%" "%TARGET%.bak-paste" >nul
-node "%~dp0fix_sidepanel_paste.js" "%TARGET%"
+node "%FIX%" "%TARGET%"
 if errorlevel 1 (
   echo.
   echo [X] 补丁未应用（原文件没有被修改）。常见原因：扩展版本与 0.0.161.0 不一致。
