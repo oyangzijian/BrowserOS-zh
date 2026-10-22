@@ -12,7 +12,11 @@ if ! command -v node >/dev/null 2>&1; then
   exit 1
 fi
 
-if [ ! -f "fix_sidepanel_paste.js" ]; then
+FIX="fix_sidepanel_paste.js"
+if [ ! -f "$FIX" ] && [ -f "../../tools/fix_sidepanel_paste.js" ]; then
+  FIX="../../tools/fix_sidepanel_paste.js"
+fi
+if [ ! -f "$FIX" ]; then
   echo "❌ 找不到 fix_sidepanel_paste.js，请不要单独移动本脚本，要在解压后的完整文件夹里运行。"
   read -p "按回车退出"
   exit 1
@@ -46,7 +50,7 @@ if [ ! -f "$TARGET.bak-paste" ]; then
   echo "📝 已备份原文件：$TARGET.bak-paste"
 fi
 
-node fix_sidepanel_paste.js "$TARGET"
+node "$FIX" "$TARGET"
 
 echo ""
 echo "✅ 完成！重新打开 BrowserOS，在 Assistant 对话框里复制一张图片后按 ⌘+V 测试。"
